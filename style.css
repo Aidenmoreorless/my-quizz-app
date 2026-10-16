@@ -37,3 +37,55 @@ body {
   color: #b3b3cc;
   font-size: 1rem;
 }
+
+/* FEATURE 2: AVATAR STYLES */
+.avatar-section {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #252542;
+  border-radius: 8px;
+}
+
+.avatar-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  color: #00d2ff;
+}
+
+.avatar-grid {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.avatar-btn {
+  background-color: #3b3b60;
+  color: white;
+  border: 2px solid transparent;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.avatar-btn:hover {
+  background-color: #4f4f80;
+}
+
+.avatar-btn.selected {
+  border-color: #00ff88;
+  background-color: #1e4a38;
+}
+
+#selected-avatar-text {
+  font-size: 0.95rem;
+  color: #a0a0b8;
+}
+
+#current-blook {
+  color: #00ff88;
+  font-weight: bold;
+}
