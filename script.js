@@ -1,71 +1,3 @@
-// VARIABLE: Store selected avatar name
-let selectedAvatar = "";
-
-// HTML ELEMENTS: Select buttons and feedback text
-const avatarButtons = document.querySelectorAll(".avatar-btn");
-const currentBlookDisplay = document.getElementById("current-blook");
-
-// FUNCTION: Select an avatar and highlight the active button
-function selectAvatar(event) {
-  const clickedButton = event.target;
-  
-  // Remove 'selected' styling from all buttons
-  avatarButtons.forEach(btn => btn.classList.remove("selected"));
-  
-  // Highlight clicked button
-  clickedButton.classList.add("selected");
-  
-  // Update variable and display text
-  selectedAvatar = clickedButton.dataset.avatar;
-  currentBlookDisplay.textContent = selectedAvatar;
-}
-
-// EVENT LISTENERS: Connect click event to every avatar button
-avatarButtons.forEach(button => {
-  button.addEventListener("click", selectAvatar);
-});
-// VARIABLES: Track player stats and correct answer
-let score = 0;
-let placement = 4;
-const correctAnswer = "Paris";
-
-// HTML ELEMENTS: Stat displays and answer buttons
-const scoreDisplay = document.getElementById("score-display");
-const placementDisplay = document.getElementById("placement-display");
-const gameStatus = document.getElementById("game-status");
-const answerButtons = document.querySelectorAll(".answer-btn");
-
-// FUNCTION: Handle answer clicks
-function handleAnswer(event) {
-  const selectedBtn = event.target;
-  const chosenAnswer = selectedBtn.textContent;
-
-  // Disable all buttons after an answer is chosen
-  answerButtons.forEach(btn => btn.disabled = true);
-
-  // CONDITION: Check if answer is correct
-  if (chosenAnswer === correctAnswer) {
-    score += 100;
-    placement = 1; // Move up in rank
-    selectedBtn.classList.add("correct");
-    gameStatus.textContent = "Correct! +100 Points!";
-  } else {
-    score -= 100;
-    // Score should not go below zero
-    if (score < 0) score = 0;
-    selectedBtn.classList.add("incorrect");
-    gameStatus.textContent = "Incorrect! -100 Points!";
-  }
-
-  // Update screen displays
-  scoreDisplay.textContent = score;
-  placementDisplay.textContent = `#${placement}`;
-}
-
-// EVENT LISTENERS: Connect click event to every answer button
-answerButtons.forEach(button => {
-  button.addEventListener("click", handleAnswer);
-});
 // QUESTIONS DATA ARRAY
 const quizQuestions = [
   {
@@ -85,11 +17,10 @@ const quizQuestions = [
   }
 ];
 
-// VARIABLES
+// VARIABLES: Track current state
 let currentQuestionIndex = 0;
 let score = 0;
 let placement = 4;
-let selectedAvatar = "Player";
 
 // HTML ELEMENTS
 const questionText = document.getElementById("question-text");
@@ -105,6 +36,18 @@ const bannerSection = document.querySelector(".banner-section");
 const finalStats = document.getElementById("final-stats");
 const podiumWinnerName = document.getElementById("podium-winner-name");
 const restartBtn = document.getElementById("restart-btn");
+const currentBlook = document.getElementById("current-blook");
+const avatarButtons = document.querySelectorAll(".avatar-btn");
+
+// FUNCTION: Avatar Selection (Feature 2)
+function selectAvatar(event) {
+  const clickedButton = event.currentTarget;
+  
+  avatarButtons.forEach(btn => btn.classList.remove("selected"));
+  clickedButton.classList.add("selected");
+  
+  currentBlook.textContent = clickedButton.dataset.avatar;
+}
 
 // FUNCTION: Load current question into UI
 function loadQuestion() {
@@ -123,10 +66,11 @@ function loadQuestion() {
 
 // FUNCTION: Handle Answer Selection
 function handleAnswer(event) {
-  const selectedBtn = event.target;
+  const selectedBtn = event.currentTarget;
   const chosenAnswer = selectedBtn.textContent.trim();
   const correctAnswer = quizQuestions[currentQuestionIndex].answer;
 
+  // Disable answer buttons after selection
   answerButtons.forEach(btn => btn.disabled = true);
 
   if (chosenAnswer === correctAnswer) {
@@ -144,13 +88,13 @@ function handleAnswer(event) {
   scoreDisplay.textContent = score;
   placementDisplay.textContent = `#${placement}`;
 
-  // Show Next Button or End Button
+  // Show Next Button or End Button text
   if (currentQuestionIndex < quizQuestions.length - 1) {
-    nextBtn.classList.remove("hidden");
+    nextBtn.textContent = "Next Question ➔";
   } else {
     nextBtn.textContent = "See Final Results 🏆";
-    nextBtn.classList.remove("hidden");
   }
+  nextBtn.classList.remove("hidden");
 }
 
 // FUNCTION: Move to Next Question or Show Podium
@@ -172,8 +116,8 @@ function showEndScreen() {
   
   endScreen.classList.remove("hidden");
   
-  const blookName = document.getElementById("current-blook").textContent;
-  const displayName = blookName !== "None" ? blookName : "You";
+  const blookName = currentBlook.textContent;
+  const displayName = (blookName !== "None") ? blookName : "You";
   
   podiumWinnerName.textContent = displayName;
   finalStats.textContent = `You finished in #${placement} place with ${score} points!`;
@@ -194,11 +138,14 @@ function restartGame() {
   avatarSection.classList.remove("hidden");
   bannerSection.classList.remove("hidden");
   
-  nextBtn.textContent = "Next Question ➔";
   loadQuestion();
 }
 
 // EVENT LISTENERS
+avatarButtons.forEach(button => {
+  button.addEventListener("click", selectAvatar);
+});
+
 answerButtons.forEach(button => {
   button.addEventListener("click", handleAnswer);
 });
