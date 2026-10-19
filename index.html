@@ -38,8 +38,32 @@
         <button class="answer-btn">Berlin</button>
         <button class="answer-btn">Madrid</button>
       </div>
+    
+      <!-- FEATURE 6: NEXT QUESTION BUTTON -->
+      <button id="next-btn" class="hidden">Next Question ➔</button>
     </section>
  
+    <!-- FEATURE 6: FINAL PODIUM END SCREEN -->
+    <section id="end-screen" class="hidden">
+      <h2>Game Over! 🏆</h2>
+      <p id="final-stats">You finished in 1st Place!</p>
+      <div class="podium-container">
+        <div class="podium-step second">
+          <span class="podium-rank">2nd</span>
+          <span class="podium-name">Cat</span>
+        </div>
+        <div class="podium-step first">
+          <span class="podium-rank">1st</span>
+          <span id="podium-winner-name" class="podium-name">You</span>
+        </div>
+        <div class="podium-step third">
+          <span class="podium-rank">3rd</span>
+          <span class="podium-name">Dog</span>
+        </div>
+      </div>
+      <button id="restart-btn">Play Again</button>
+    </section>
+    
     <!-- FEATURE 4: SCORE & PLACEMENT BANNER -->
     <section class="banner-section">
       <div class="stat-box">
